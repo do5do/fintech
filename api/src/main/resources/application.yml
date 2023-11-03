@@ -1,0 +1,12 @@
+spring:
+  profiles:
+    include:
+      - domain
+
+  # controller path matching 전략 설정 (swagger 적용 시 발생하는 에러 해결)
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+
+server:
+  port: 80
