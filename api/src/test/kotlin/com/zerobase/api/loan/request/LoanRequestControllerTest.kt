@@ -2,8 +2,8 @@ package com.zerobase.api.loan.request
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.KotlinModule
-import com.zerobase.api.loan.GenerateKey
-import com.zerobase.api.loan.encrypt.EncryptComponent
+import com.zerobase.api.util.GenerateKey
+import com.zerobase.api.util.encrypt.EncryptComponent
 import com.zerobase.domain.domain.UserInfo
 import com.zerobase.domain.repository.UserInfoRepository
 import io.mockk.every

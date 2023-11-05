@@ -1,7 +1,8 @@
 package com.zerobase.api.loan.request
 
-import com.zerobase.api.loan.GenerateKey
-import com.zerobase.api.loan.encrypt.EncryptComponent
+import com.zerobase.api.util.GenerateKey
+import com.zerobase.api.util.encrypt.EncryptComponent
+import com.zerobase.domain.domain.UserInfo
 import com.zerobase.domain.repository.UserInfoRepository
 import com.zerobase.kafka.enum.KafkaTopic
 import com.zerobase.kafka.producer.LoanRequestSender
@@ -32,7 +33,7 @@ class LoanRequestServiceImpl(
         return LoanRequestDto.LoanRequestResponseDto(userKey)
     }
 
-    override fun saveUserInfo(userInfoDto: UserInfoDto) =
+    override fun saveUserInfo(userInfoDto: UserInfoDto): UserInfo =
     userInfoRepository.save(userInfoDto.toEntity())
 
 

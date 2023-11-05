@@ -1,4 +1,4 @@
-package com.zerobase.api.loan.encrypt
+package com.zerobase.api.util.encrypt
 
 import org.springframework.stereotype.Component
 import java.util.*
@@ -16,8 +16,8 @@ class EncryptComponent {
     private val decoder = Base64.getDecoder()
 
     fun encryptString(encryptString: String): String {
-        val encryptedString = cipherPkcs5(Cipher.ENCRYPT_MODE, secretKey).doFinal(
-            encryptString.toByteArray(Charsets.UTF_8))
+        val encryptedString = cipherPkcs5(Cipher.ENCRYPT_MODE, secretKey)
+            .doFinal(encryptString.toByteArray(Charsets.UTF_8))
 
         return String(encoder.encode(encryptedString))
     }
@@ -25,7 +25,7 @@ class EncryptComponent {
     fun decryptString(decryptString: String): String {
         val byteString = decoder.decode(decryptString.toByteArray(Charsets.UTF_8))
 
-        return String(cipherPkcs5(Cipher.ENCRYPT_MODE, secretKey).doFinal(byteString))
+        return String(cipherPkcs5(Cipher.DECRYPT_MODE, secretKey).doFinal(byteString))
     }
 
     fun cipherPkcs5(opMode: Int, secretKey: String): Cipher {

@@ -18,14 +18,14 @@ class LogAspect {
 
     @Around("isApi()")
     fun loggingAspect(joinPoint: ProceedingJoinPoint): Any {
-        val stopWath = StopWatch()
-        stopWath.start()
+        val stopWatch = StopWatch()
+        stopWatch.start()
 
         val result = joinPoint.proceed()
 
-        stopWath.stop()
+        stopWatch.stop()
 
-        logger.info { "${joinPoint.signature.name} ${joinPoint.args[0]} ${stopWath.lastTaskTimeMillis}"}
+        logger.info { "${joinPoint.signature.name} ${joinPoint.args[0]} ${stopWatch.lastTaskTimeMillis}"}
 
         return result
     }

@@ -14,7 +14,8 @@ class LoanRequestService(
 ) {
     companion object {
         // proxy server(nginx)를 통해서 css api를 호출하기 때문에 nginx로 보낸다.
-        const val nginxUrl = "http://nginx:8085/css/api/v1/request"
+//        const val nginxUrl = "http://nginx:8085/css/api/v1/request"
+        const val nginxUrl = "http://localhost:8086/css/api/v1/request"
     }
 
     fun loanRequest(loanRequestDto: LoanRequestDto) {

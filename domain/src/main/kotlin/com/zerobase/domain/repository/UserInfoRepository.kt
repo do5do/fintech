@@ -4,5 +4,5 @@ import com.zerobase.domain.domain.UserInfo
 import org.springframework.data.jpa.repository.JpaRepository
 
 interface UserInfoRepository : JpaRepository<UserInfo, Long> {
-    fun findByUserKey(userKey: String): UserInfo
+    fun findByUserKey(userKey: String): UserInfo?
 }
