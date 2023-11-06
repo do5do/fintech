@@ -1,9 +1,9 @@
 package com.zerobase.domain.domain
 
 import com.zerobase.domain.type.OrgType
-import com.zerobase.domain.type.OrgTypeConverter
+import com.zerobase.domain.converter.OrgTypeConverter
 import com.zerobase.domain.type.ProdType
-import com.zerobase.domain.type.ProdTypeConverter
+import com.zerobase.domain.converter.ProdTypeConverter
 import javax.persistence.*
 
 @Entity

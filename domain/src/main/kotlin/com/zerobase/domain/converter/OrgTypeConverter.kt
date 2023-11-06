@@ -1,5 +1,6 @@
-package com.zerobase.domain.type
+package com.zerobase.domain.converter
 
+import com.zerobase.domain.type.OrgType
 import javax.persistence.AttributeConverter
 import javax.persistence.Converter
 

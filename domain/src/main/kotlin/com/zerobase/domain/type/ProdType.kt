@@ -2,11 +2,10 @@ package com.zerobase.domain.type
 
 enum class ProdType(
     val code: String,
-    val orgName: String
 ) {
-    BK("00001", "한국은행"),
-    KDB("00002", "산업은행"),
-    IBK("00003", "기업은행");
+    BK("00001"),
+    KDB("00002"),
+    IBK("00003");
 
     companion object {
         fun fromCode(code: String): ProdType {

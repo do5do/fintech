@@ -1,8 +1,10 @@
-package com.zerobase.api.product
+package com.zerobase.api.product.service
 
 import com.zerobase.api.exception.CustomErrorCode.PRODUCT_LIST_ALREADY_EXISTS
 import com.zerobase.api.exception.CustomErrorCode.PRODUCT_LIST_NOT_FOUND
 import com.zerobase.api.exception.CustomException
+import com.zerobase.api.product.dto.ProductDto
+import com.zerobase.api.product.dto.ProductRequestDto
 import com.zerobase.domain.repository.ProductInfoRepository
 import com.zerobase.domain.repository.ProductListRepository
 import com.zerobase.domain.type.OrgType
@@ -19,23 +21,23 @@ class ProductServiceImpl(
 ) : ProductService {
 
     @Transactional
-    @CacheEvict(key = "#productRequestInputDto", value = ["PRODUCT"], cacheManager = "redisCacheManager")
+    @CacheEvict(key = "#productRequestInput", value = ["PRODUCT"], cacheManager = "redisCacheManager")
     override fun productRequest(
-        productRequestInputDto: ProductRequestDto.ProductRequestInputDto
+        productRequestInput: ProductRequestDto.ProductRequestInput
     ): ProductDto {
         val exists = productListRepository.existsByOrganizationCodeAndProductCode(
-            productRequestInputDto.organizationCode, productRequestInputDto.productCode
+            productRequestInput.organizationCode, productRequestInput.productCode
         )
 
         if (exists) {
             throw CustomException(PRODUCT_LIST_ALREADY_EXISTS)
         }
 
-        val productList = productRequestInputDto.toProductList()
+        val productList = productRequestInput.toProductList()
         productListRepository.save(productList)
 
         val productInfo = productInfoRepository.save(
-            productRequestInputDto.toProductInfo(productList)
+            productRequestInput.toProductInfo(productList)
         )
         return ProductDto.fromEntity(productInfo)
     }
@@ -49,7 +51,8 @@ class ProductServiceImpl(
             ?: throw CustomException(PRODUCT_LIST_NOT_FOUND)
 
         return productInfos.map { productInfo ->
-            ProductDto.fromEntity(productInfo) }.toList()
+            ProductDto.fromEntity(productInfo)
+        }.toList()
     }
 
 }

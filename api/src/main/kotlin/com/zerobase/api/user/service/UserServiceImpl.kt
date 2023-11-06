@@ -1,7 +1,9 @@
-package com.zerobase.api.user
+package com.zerobase.api.user.service
 
 import com.zerobase.api.exception.CustomErrorCode
 import com.zerobase.api.exception.CustomException
+import com.zerobase.api.user.dto.UserDto
+import com.zerobase.api.user.dto.UserRequestDto
 import com.zerobase.api.util.GenerateKey
 import com.zerobase.domain.repository.UserInfoRepository
 import org.springframework.stereotype.Service
@@ -16,13 +18,13 @@ class UserServiceImpl(
 
     @Transactional
     override fun userRequest(
-        userRequestInputDto: UserRequestDto.UserRequestInputDto
-    ): UserRequestDto.UserResponseDto {
+        userRequestInput: UserRequestDto.UserRequestInput
+    ): UserRequestDto.UserKeyResponse {
         val userKey = generateKey.generateUserKey()
         userInfoRepository.save(
-            userRequestInputDto.toEntity(userKey)
+            userRequestInput.toEntity(userKey)
         )
-        return UserRequestDto.UserResponseDto(userKey)
+        return UserRequestDto.UserKeyResponse(userKey)
     }
 
     override fun getUser(userKey: String): UserDto {

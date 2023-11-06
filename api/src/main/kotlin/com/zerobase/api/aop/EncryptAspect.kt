@@ -1,17 +1,13 @@
 package com.zerobase.api.aop
 
-import com.zerobase.api.user.UserDto
-import com.zerobase.api.user.UserRequestDto
+import com.zerobase.api.user.dto.UserDto
+import com.zerobase.api.user.dto.UserRequestDto
 import com.zerobase.api.util.encrypt.EncryptComponent
-import com.zerobase.domain.annotation.Encrypt
-import com.zerobase.domain.domain.UserInfo
 import mu.KotlinLogging
-import org.aspectj.lang.JoinPoint
 import org.aspectj.lang.ProceedingJoinPoint
 import org.aspectj.lang.annotation.AfterReturning
 import org.aspectj.lang.annotation.Around
 import org.aspectj.lang.annotation.Aspect
-import org.aspectj.lang.annotation.Before
 import org.aspectj.lang.annotation.Pointcut
 import org.springframework.stereotype.Component
 
@@ -34,7 +30,7 @@ class EncryptAspect(
     private fun encrypt(joinPoint: ProceedingJoinPoint): Any? {
         val args = joinPoint.args[0]
 
-        if (args is UserRequestDto.UserRequestInputDto) {
+        if (args is UserRequestDto.UserRequestInput) {
             args.userRegistrationNumber =
                 encryptComponent.encryptString(args.userRegistrationNumber)
             logger.info { "encrypted userRegistrationNumber" }
