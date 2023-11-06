@@ -31,6 +31,10 @@ spring:
     producer:
       bootstrap-servers: localhost:9092
 
+css:
+  url: http://localhost:8081/css/api/v1/request
+
+
 ---
 spring:
   config:
@@ -54,4 +58,8 @@ spring:
       bootstrap-servers: kafka:9092
     producer:
       bootstrap-servers: kafka:9092
+
+css:
+  # proxy server(nginx)를 통해서 css api를 호출하기 때문에 nginx로 보낸다.
+  url: http://nginx:8085/css/api/v1/request
 

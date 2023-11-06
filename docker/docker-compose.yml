@@ -7,6 +7,7 @@ services:
       - "2181:2181"
     networks:
       - fintech
+
   kafka:
     image: wurstmeister/kafka:2.12-2.5.0
     container_name: kafka
@@ -19,19 +20,10 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
     networks:
       - fintech
+
   api:
     image: api:1.0.0
     container_name: api
-    ports:
-      - "80:80"
-    depends_on:
-      - fintech-mysql
-      - fintech-redis
-    networks:
-      - fintech
-  consumer:
-    image: consumer:1.0.0
-    container_name: consumer
     ports:
       - "8080:8080"
     depends_on:
@@ -39,13 +31,26 @@ services:
       - fintech-redis
     networks:
       - fintech
+
+  consumer:
+    image: consumer:1.0.0
+    container_name: consumer
+    ports:
+      - "8081:8081"
+    depends_on:
+      - fintech-mysql
+      - fintech-redis
+    networks:
+      - fintech
+
   css:
     image: css:1.0.0
     container_name: css
     ports:
-      - "8081:8081"
+      - "8082:8082"
     networks:
       - fintech
+
   nginx:
     image: nginx:1.0.0
     container_name: nginx
@@ -54,7 +59,7 @@ services:
     networks:
       - fintech
 
-# mysql connection 문제로인해 추가 (같은 네트워크로 생성해줘도 연결을 못하는 문제 발생)
+# mysql connection 문제로인해 추가 (같은 네트워크지만 따로 생성하면 연결 못하는 문제 발생)
   fintech-mysql:
     image: mysql:latest
     container_name: fintech-mysql
@@ -67,6 +72,7 @@ services:
       - "3306:3306"
     networks:
       - fintech
+
   fintech-redis:
     image: redis:latest
     container_name: fintech-redix
