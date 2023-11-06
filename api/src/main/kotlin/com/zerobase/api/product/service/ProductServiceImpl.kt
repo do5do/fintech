@@ -1,7 +1,7 @@
 package com.zerobase.api.product.service
 
-import com.zerobase.api.exception.CustomErrorCode.PRODUCT_LIST_ALREADY_EXISTS
-import com.zerobase.api.exception.CustomErrorCode.PRODUCT_LIST_NOT_FOUND
+import com.zerobase.api.exception.ErrorCode.PRODUCT_LIST_ALREADY_EXISTS
+import com.zerobase.api.exception.ErrorCode.PRODUCT_LIST_NOT_FOUND
 import com.zerobase.api.exception.CustomException
 import com.zerobase.api.product.dto.ProductDto
 import com.zerobase.api.product.dto.ProductRequestDto

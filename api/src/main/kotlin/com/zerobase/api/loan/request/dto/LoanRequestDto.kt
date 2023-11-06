@@ -1,4 +1,4 @@
-package com.zerobase.api.loan.request
+package com.zerobase.api.loan.request.dto
 
 class LoanRequestDto {
     data class LoanRequestInputDto(

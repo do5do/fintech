@@ -1,4 +1,4 @@
-package com.zerobase.api.loan.request
+package com.zerobase.api.loan.request.dto
 
 import com.zerobase.domain.domain.UserInfo
 import com.zerobase.kafka.dto.LoanRequestDto

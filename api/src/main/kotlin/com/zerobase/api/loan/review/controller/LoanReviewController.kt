@@ -1,5 +1,7 @@
-package com.zerobase.api.loan.review
+package com.zerobase.api.loan.review.controller
 
+import com.zerobase.api.loan.review.dto.LoanReviewDto
+import com.zerobase.api.loan.review.service.LoanReviewServiceImpl
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable

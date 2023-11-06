@@ -1,7 +1,8 @@
-package com.zerobase.api.loan.review
+package com.zerobase.api.loan.review.service
 
-import com.zerobase.api.exception.CustomErrorCode
+import com.zerobase.api.exception.ErrorCode
 import com.zerobase.api.exception.CustomException
+import com.zerobase.api.loan.review.dto.LoanReviewDto
 import com.zerobase.domain.domain.LoanReview
 import com.zerobase.domain.repository.LoanReviewRepository
 import org.springframework.cache.annotation.Cacheable
@@ -16,7 +17,7 @@ class LoanReviewServiceImpl(
         return LoanReviewDto.LoanReviewResponseDto(
             userKey = userKey,
             loanResult = getLoanResult(userKey)?.toResponseDto()
-                ?: throw CustomException(CustomErrorCode.RESULT_NOT_FOUND)
+                ?: throw CustomException(ErrorCode.RESULT_NOT_FOUND)
         )
     }
 

@@ -1,7 +1,7 @@
 package com.zerobase.api.user.service
 
-import com.zerobase.api.exception.CustomErrorCode
 import com.zerobase.api.exception.CustomException
+import com.zerobase.api.exception.ErrorCode
 import com.zerobase.api.user.dto.UserDto
 import com.zerobase.api.user.dto.UserRequestDto
 import com.zerobase.api.util.GenerateKey
@@ -29,7 +29,7 @@ class UserServiceImpl(
 
     override fun getUser(userKey: String): UserDto {
         val userInfo = userInfoRepository.findByUserKey(userKey)
-            ?: throw CustomException(CustomErrorCode.USER_NOT_FOUND)
+            ?: throw CustomException(ErrorCode.USER_NOT_FOUND)
 
         return UserDto.fromEntity(userInfo)
     }

@@ -1,6 +1,6 @@
 package com.zerobase.api.product.controller
 
-import com.zerobase.api.dto.SuccessCode
+import com.zerobase.api.type.SuccessCode
 import com.zerobase.api.product.dto.GetProductInfoResponse
 import com.zerobase.api.product.dto.ProductRequestDto
 import com.zerobase.api.product.service.ProductServiceImpl

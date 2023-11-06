@@ -1,3 +1,3 @@
 package com.zerobase.api.exception
 
-class CustomException(val customErrorCode: CustomErrorCode) : RuntimeException()
+class CustomException(val errorCode: ErrorCode) : RuntimeException()

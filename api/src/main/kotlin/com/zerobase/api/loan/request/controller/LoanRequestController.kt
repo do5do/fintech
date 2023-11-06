@@ -1,5 +1,7 @@
-package com.zerobase.api.loan.request
+package com.zerobase.api.loan.request.controller
 
+import com.zerobase.api.loan.request.dto.LoanRequestDto
+import com.zerobase.api.loan.request.service.LoanRequestServiceImpl
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody

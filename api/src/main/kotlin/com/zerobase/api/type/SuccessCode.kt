@@ -1,4 +1,4 @@
-package com.zerobase.api.dto
+package com.zerobase.api.type
 
 enum class SuccessCode(
     val responseCode: String,

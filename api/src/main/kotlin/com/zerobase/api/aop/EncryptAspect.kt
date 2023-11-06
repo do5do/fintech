@@ -1,15 +1,13 @@
 package com.zerobase.api.aop
 
-import com.zerobase.api.user.dto.UserDto
-import com.zerobase.api.user.dto.UserRequestDto
 import com.zerobase.api.util.encrypt.EncryptComponent
+import com.zerobase.domain.annotation.Encrypt
 import mu.KotlinLogging
-import org.aspectj.lang.ProceedingJoinPoint
-import org.aspectj.lang.annotation.AfterReturning
-import org.aspectj.lang.annotation.Around
-import org.aspectj.lang.annotation.Aspect
-import org.aspectj.lang.annotation.Pointcut
+import org.aspectj.lang.JoinPoint
+import org.aspectj.lang.annotation.*
 import org.springframework.stereotype.Component
+import kotlin.reflect.full.declaredMemberProperties
+import kotlin.reflect.full.hasAnnotation
 
 @Aspect
 @Component
@@ -18,52 +16,41 @@ class EncryptAspect(
 ) {
     val logger = KotlinLogging.logger {}
 
-    @Pointcut("execution(* com.zerobase.api..*Service.*Request(..))")
-    private fun request() {
+    @Pointcut("execution(* com.zerobase.domain..*Repository.save(..))")
+    private fun save() {
     }
 
-    @Pointcut("execution(* com.zerobase.api..*Service.get*(..))")
-    private fun response() {
+    @Pointcut("execution(* com.zerobase.domain..*Repository.find*(..))")
+    private fun find() {
     }
 
-    @Around("request())")
-    private fun encrypt(joinPoint: ProceedingJoinPoint): Any? {
+    @Before("save()")
+    private fun encryptEntity(joinPoint: JoinPoint) {
         val args = joinPoint.args[0]
 
-        if (args is UserRequestDto.UserRequestInput) {
-            args.userRegistrationNumber =
-                encryptComponent.encryptString(args.userRegistrationNumber)
-            logger.info { "encrypted userRegistrationNumber" }
-        }
-
-        return joinPoint.proceed()
-    }
-
-    @AfterReturning("response()", returning = "result")
-    private fun decrypt(result: Any) {
-        if (result is UserDto) {
-            result.userRegistrationNumber =
-                encryptComponent.decryptString(result.userRegistrationNumber)
-            logger.info { "decrypted userRegistrationNumber" }
+        for (obj in args::class.declaredMemberProperties) {
+            if (obj.hasAnnotation<Encrypt>()) {
+                val fieldName = obj.name
+                val declaredField = args.javaClass.getDeclaredField(fieldName)
+                declaredField.trySetAccessible()
+                val value = declaredField.get(args)
+                declaredField.set(args, encryptComponent.encryptString(value.toString()))
+                logger.info { "encrypted $fieldName" }
+            }
         }
     }
 
-//    @Before("save()") // 포인트컷이 안잡힌다.. 답이 없는데ㅠㅠ find랑 save에서 잡으라는건 리파지토리 말하는거 아닌가?
-//    private fun encryptEntity(joinPoint: JoinPoint) {
-//        val args = joinPoint.args[0]
-//
-//        if (args is UserInfo) {
-//            val fields = args.javaClass.declaredFields
-//
-//            for (field in fields) {
-//                if (field.isAnnotationPresent(Encrypt::class.java)) {
-//                    val declaredField = args.javaClass.getDeclaredField(field.name)
-//                    declaredField.canAccess(true)
-//                    val value = declaredField.get(args)
-//                    declaredField.set(args, encryptComponent.encryptString(value.toString()))
-//                    break;
-//                }
-//            }
-//        }
-//    }
+    @AfterReturning("find()", returning = "result")
+    private fun decryptEntity(result: Any) {
+        for (obj in result::class.declaredMemberProperties) {
+            if (obj.hasAnnotation<Encrypt>()) {
+                val fieldName = obj.name
+                val declaredField = result.javaClass.getDeclaredField(fieldName)
+                declaredField.trySetAccessible()
+                val value = declaredField.get(result)
+                declaredField.set(result, encryptComponent.decryptString(value.toString()))
+                logger.info { "decrypted $fieldName" }
+            }
+        }
+    }
 }

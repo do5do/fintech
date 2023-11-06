@@ -1,4 +1,4 @@
-package com.zerobase.api.loan.review
+package com.zerobase.api.loan.review.dto
 
 class LoanReviewDto {
     data class LoanReviewResponseDto(

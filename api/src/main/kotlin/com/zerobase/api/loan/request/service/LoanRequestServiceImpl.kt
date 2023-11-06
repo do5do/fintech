@@ -1,5 +1,7 @@
-package com.zerobase.api.loan.request
+package com.zerobase.api.loan.request.service
 
+import com.zerobase.api.loan.request.dto.LoanRequestDto
+import com.zerobase.api.loan.request.dto.UserInfoDto
 import com.zerobase.api.util.GenerateKey
 import com.zerobase.api.util.encrypt.EncryptComponent
 import com.zerobase.domain.domain.UserInfo

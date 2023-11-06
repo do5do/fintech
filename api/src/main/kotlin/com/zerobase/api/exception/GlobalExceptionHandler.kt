@@ -4,7 +4,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.RestControllerAdvice
 
 @RestControllerAdvice
-class GlobalControllerAdvice {
+class GlobalExceptionHandler {
 
     @ExceptionHandler(CustomException::class)
     fun customExceptionHandler(customException: CustomException) =

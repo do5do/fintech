@@ -1,5 +1,6 @@
-package com.zerobase.api.loan.review
+package com.zerobase.api.loan.review.service
 
+import com.zerobase.api.loan.review.dto.LoanReviewDto
 import com.zerobase.domain.domain.LoanReview
 
 interface LoanReviewService {

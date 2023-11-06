@@ -8,11 +8,11 @@ class ErrorResponse(
 ) {
     fun toResponseEntity(): ResponseEntity<ErrorResponseDto> {
         return ResponseEntity
-            .status(customException.customErrorCode.statusCode)
+            .status(customException.errorCode.statusCode)
             .body(
                 ErrorResponseDto(
-                    errorCode = customException.customErrorCode.errorCode,
-                    errorMessage = customException.customErrorCode.errorMessage
+                    errorCode = customException.errorCode.errorCode,
+                    errorMessage = customException.errorCode.errorMessage
                 )
             )
     }

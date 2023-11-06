@@ -1,6 +1,6 @@
 package com.zerobase.api.user.controller
 
-import com.zerobase.api.dto.SuccessCode
+import com.zerobase.api.type.SuccessCode
 import com.zerobase.api.user.dto.GetUserResponse
 import com.zerobase.api.user.dto.UserRequestDto
 import com.zerobase.api.user.service.UserServiceImpl
