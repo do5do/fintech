@@ -62,7 +62,7 @@ class EncryptAspect(
 
     @AfterThrowing("save() || find()", throwing = "exception")
     private fun exception(joinPoint: JoinPoint, exception: Exception) {
-        logger.info { "${joinPoint.signature.name} failure. $exception" }
+        logger.error { "${joinPoint.signature.name} failure. $exception" }
         throw CustomException(ErrorCode.ENCRYPTION_FAILURE)
     }
 }
