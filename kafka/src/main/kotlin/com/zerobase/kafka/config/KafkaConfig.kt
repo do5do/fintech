@@ -14,7 +14,7 @@ import org.springframework.kafka.core.*
 @Configuration
 @EnableKafka
 class KafkaConfig(
-    @Value("\${spring.kafka.host}")
+    @Value("\${spring.kafka.consumer.bootstrap-servers}")
     private val bootstrapServer: String
 ) {
 
