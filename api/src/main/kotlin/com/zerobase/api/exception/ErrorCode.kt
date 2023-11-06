@@ -2,6 +2,7 @@ package com.zerobase.api.exception
 
 import org.springframework.http.HttpStatus
 import org.springframework.http.HttpStatus.BAD_REQUEST
+import org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR
 
 enum class ErrorCode(
     val statusCode: HttpStatus,
@@ -12,5 +13,5 @@ enum class ErrorCode(
     PRODUCT_LIST_NOT_FOUND(BAD_REQUEST, "E002", errorMessage = "product list not found"),
     PRODUCT_LIST_ALREADY_EXISTS(BAD_REQUEST, "E003", errorMessage = "product list already exists"),
     USER_NOT_FOUND(BAD_REQUEST, "E004", errorMessage = "user not found"),
-    USER_ALREADY_EXISTS(BAD_REQUEST, "E003", errorMessage = "user already exists")
+    ENCRYPTION_FAILURE(INTERNAL_SERVER_ERROR, "E005", errorMessage = "encryption failure")
 }

@@ -1,11 +1,15 @@
 package com.zerobase.api.aop
 
+import com.zerobase.api.exception.CustomException
+import com.zerobase.api.exception.ErrorCode
 import com.zerobase.api.util.encrypt.EncryptComponent
 import com.zerobase.domain.annotation.Encrypt
 import mu.KotlinLogging
 import org.aspectj.lang.JoinPoint
 import org.aspectj.lang.annotation.*
 import org.springframework.stereotype.Component
+import org.springframework.util.ObjectUtils
+import java.lang.Exception
 import kotlin.reflect.full.declaredMemberProperties
 import kotlin.reflect.full.hasAnnotation
 
@@ -42,7 +46,7 @@ class EncryptAspect(
 
     @AfterReturning("find()", returning = "result")
     private fun decryptEntity(result: Any) {
-        if (result != null) {
+        if (!ObjectUtils.isEmpty(result)) {
             for (obj in result::class.declaredMemberProperties) {
                 if (obj.hasAnnotation<Encrypt>()) {
                     val fieldName = obj.name
@@ -54,5 +58,11 @@ class EncryptAspect(
                 }
             }
         }
+    }
+
+    @AfterThrowing("save() || find()", throwing = "exception")
+    private fun exception(joinPoint: JoinPoint, exception: Exception) {
+        logger.info { "${joinPoint.signature.name} failure. $exception" }
+        throw CustomException(ErrorCode.ENCRYPTION_FAILURE)
     }
 }
