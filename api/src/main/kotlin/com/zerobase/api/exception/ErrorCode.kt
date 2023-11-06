@@ -3,7 +3,7 @@ package com.zerobase.api.exception
 import org.springframework.http.HttpStatus
 import org.springframework.http.HttpStatus.BAD_REQUEST
 
-enum class CustomErrorCode(
+enum class ErrorCode(
     val statusCode: HttpStatus,
     val errorCode: String,
     val errorMessage: String
