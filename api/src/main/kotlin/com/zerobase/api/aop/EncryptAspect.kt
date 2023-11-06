@@ -42,14 +42,16 @@ class EncryptAspect(
 
     @AfterReturning("find()", returning = "result")
     private fun decryptEntity(result: Any) {
-        for (obj in result::class.declaredMemberProperties) {
-            if (obj.hasAnnotation<Encrypt>()) {
-                val fieldName = obj.name
-                val declaredField = result.javaClass.getDeclaredField(fieldName)
-                declaredField.trySetAccessible()
-                val value = declaredField.get(result)
-                declaredField.set(result, encryptComponent.decryptString(value.toString()))
-                logger.info { "decrypted $fieldName" }
+        if (result != null) {
+            for (obj in result::class.declaredMemberProperties) {
+                if (obj.hasAnnotation<Encrypt>()) {
+                    val fieldName = obj.name
+                    val declaredField = result.javaClass.getDeclaredField(fieldName)
+                    declaredField.trySetAccessible()
+                    val value = declaredField.get(result)
+                    declaredField.set(result, encryptComponent.decryptString(value.toString()))
+                    logger.info { "decrypted $fieldName" }
+                }
             }
         }
     }

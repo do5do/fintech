@@ -1,8 +1,4 @@
 spring:
-  config:
-    activate:
-      on-profile: dev
-
   jpa:
     generate-ddl: false
     show-sql: true
@@ -33,33 +29,3 @@ spring:
 
 css:
   url: http://localhost:8081/css/api/v1/request
-
-
----
-spring:
-  config:
-    activate:
-      on-profile: prod
-
-  jpa:
-    show-sql: false
-    properties:
-      hibernate:
-        format_sql: false
-
-  datasource:
-    url: jdbc:mysql://fintech-mysql:3306/fintech?characterEncoding=UTF-8&serverTimezone=Asia/Seoul
-
-  redis:
-    host: fintech-redis
-
-  kafka:
-    consumer:
-      bootstrap-servers: kafka:9092
-    producer:
-      bootstrap-servers: kafka:9092
-
-css:
-  # proxy server(nginx)를 통해서 css api를 호출하기 때문에 nginx로 보낸다.
-  url: http://nginx:8085/css/api/v1/request
-

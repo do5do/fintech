@@ -4,7 +4,6 @@ import org.apache.kafka.clients.consumer.ConsumerConfig
 import org.apache.kafka.clients.producer.ProducerConfig
 import org.apache.kafka.common.serialization.StringDeserializer
 import org.apache.kafka.common.serialization.StringSerializer
-import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.kafka.annotation.EnableKafka
@@ -13,15 +12,11 @@ import org.springframework.kafka.core.*
 
 @Configuration
 @EnableKafka
-class KafkaConfig(
-    @Value("\${spring.kafka.consumer.bootstrap-servers}")
-    private val bootstrapServer: String
-) {
+class KafkaConfig {
 
     @Bean
     fun producerFactory(): ProducerFactory<String, String> {
         val configurationProperties = HashMap<String, Any>()
-        configurationProperties[ProducerConfig.BOOTSTRAP_SERVERS_CONFIG] = bootstrapServer
         configurationProperties[ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG] = StringSerializer::class.java
         configurationProperties[ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG] = StringSerializer::class.java
 
@@ -31,8 +26,6 @@ class KafkaConfig(
     @Bean
     fun consumerFactory(): ConsumerFactory<String, String> {
         val configurationProperties = HashMap<String, Any>()
-        configurationProperties[ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG] = bootstrapServer
-        configurationProperties[ConsumerConfig.GROUP_ID_CONFIG] = "fintech"
         configurationProperties[ConsumerConfig.AUTO_OFFSET_RESET_CONFIG] = "earliest"
         configurationProperties[ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG] = StringDeserializer::class.java
         configurationProperties[ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG] = StringDeserializer::class.java

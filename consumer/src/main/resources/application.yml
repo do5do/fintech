@@ -4,5 +4,4 @@ server:
 spring:
   profiles:
     include:
-      - domain
-    active: dev
+      - prod
